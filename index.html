@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Todos</title>
+  </head>
+  <body>
+    <div class="innerDiv">
+      <p class="header">Todos!</p>
+      <div class="newTodo">
+        <div id="form">
+          <p>New Todo:</p>
+          <form class="name">
+            <input type="text" id="newTodo" placeholder="Name"/>
+          </form>
+          <form class="category">
+            <form class="category">
+              <input type="text" id="newCategory" title="Category" placeholder="Category" />
+            </form>
+          </form>
+          <form>
+            <button type="submit" id="addTodo" class="addBtn">+</button>
+          </form>
+        </div>
+      </div>
+      <div class="content">
+        <div class="contentOne">
+          <div class="categoryButtons">
+            <button class="squareBtn" type="button" id="allTodosBtn">
+              All Todos
+            </button>
+            <!-- <button class="squareBtn" type="button" id="groceryBtn">
+              Grocery
+            </button>
+            <button class="squareBtn" type="button" id="schoolBtn">
+              School
+            </button>
+            <button class="squareBtn" type="button" id="houseBtn">House</button> -->
+            <button class="squareBtn" type="button" id="clearDoneBtn">
+              Completed Todos
+            </button>
+          </div>
+          <div class="categories">
+            <p class="categoryHeader">All Todos</p>
+            <ul class="initialTodos todos" id="initialTodos"></ul>
+            <!-- <ul class="groceryTodos todos" id="groceryTodos"></ul>
+            <ul class="schoolTodos todos" id="schoolTodos"></ul>
+            <ul class="houseTodos todos" id="houseTodos"></ul> -->
+            <p class="completedheader"></p>
+            <ul class="completedTodos todos" id="completedTodos"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="new.js"></script>
+    <script src="completed.js"></script>
+  </body>
+</html>
