@@ -107,7 +107,7 @@ function displayTodos() {
   initialTodos.forEach((item) => addTodo(item));
 
   setupDeleteButtons();
-  completeTodo();
+  // completeTodo();
 }
 
 function addTodo(item) {
