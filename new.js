@@ -1,4 +1,5 @@
 const api = "https://mighty-dusk-75086.herokuapp.com/todos";
+// const api = 'http://localhost:3000/todos'
 let initialTodos = [];
 
 //fetch todos
@@ -11,7 +12,7 @@ async function fetchTodos() {
   return todos;
 }
 
-//post new todo
+//post fetch
 async function postTodo(data) {
   let response = await fetch(api, {
     method: "POST",
@@ -38,47 +39,49 @@ function newTodo(todoContent, todoCategory) {
   displayTodos();
 }
 
-// //post fetch
-// async function completeTodoFetch(id) {
-//   let response = await fetch(api + "/" + id, {
-//     method: "POST",
-//     headers: {
-//       "content-Type": "application/json",
-//     },
-//   });
-// }
-
-// function completeTodo(id) {
-//   const index = initialTodos.findIndex((item) => item.id == id);
-//   initialTodos[index].complete = !initialTodos[index].complete;
-
-//   completeTodoFetch(id);
-// }
-
-// //set up checkmark
-// function setupCheckmark() {
-//   const check = document.getElementsByClassName("check");
-//   for (let t = 0; t < check.length; t++) {
-//     check[t].addEventListener("click", (event) => {
-//       completeTodo(event.target.dataset.id);
-
-//       // if (initialTodos[id].complete === true) {
-//       //   console.log(check.parentElement);
-//       // } else {
-//       //   console.log("false");
-//       // }
-//     });
-//   }
-// }
 
 //delete fetch
 async function deleteTodoFetch(id) {
   let response = await fetch(api + "/" + id, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json",
+      "content-Type": "application/json",
     },
   });
+}
+
+//put fetch
+async function completeTodoFetch(id) {
+  let response = await fetch(api + "/" + id, {
+    method: "PUT",
+    headers: {
+      "content-Type": "application/json",
+    },
+  });
+}
+
+function completeTodo(id) {
+  const index = initialTodos.findIndex((item) => item.id == id);
+  const complete = {
+    complete: true,
+  }
+  completeTodoFetch(complete);
+}
+
+//set up checkmark
+function setupCompleteButtons() {
+  const check = document.getElementsByClassName("check");
+  for (let t = 0; t < check.length; t++) {
+    check[t].addEventListener("click", (event) => {
+      completeTodo(event.target.dataset.id);
+
+      // if (initialTodos[id].complete === true) {
+      //   console.log(check.parentElement);
+      // } else {
+      //   console.log("false");
+      // }
+    });
+  }
 }
 
 //splice todo for user interfce
@@ -99,6 +102,7 @@ function setupDeleteButtons() {
   }
 }
 
+
 //displays todos
 function displayTodos() {
   const initalList = document.querySelector(".initialTodos");
@@ -107,7 +111,7 @@ function displayTodos() {
   initialTodos.forEach((item) => addTodo(item));
 
   setupDeleteButtons();
-  // completeTodo();
+  setupCompleteButtons()
 }
 
 function addTodo(item) {
