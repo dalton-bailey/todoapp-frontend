@@ -38,38 +38,38 @@ function newTodo(todoContent, todoCategory) {
   displayTodos();
 }
 
-//post fetch
-async function completeTodoFetch(id) {
-  let response = await fetch(api + "/" + id, {
-    method: "POST",
-    headers: {
-      "content-Type": "application/json",
-    },
-  });
-}
+// //post fetch
+// async function completeTodoFetch(id) {
+//   let response = await fetch(api + "/" + id, {
+//     method: "POST",
+//     headers: {
+//       "content-Type": "application/json",
+//     },
+//   });
+// }
 
-function completeTodo(id) {
-  const index = initialTodos.findIndex((item) => item.id == id);
-  initialTodos[index].complete = !initialTodos[index].complete;
+// function completeTodo(id) {
+//   const index = initialTodos.findIndex((item) => item.id == id);
+//   initialTodos[index].complete = !initialTodos[index].complete;
 
-  completeTodoFetch(id);
-}
+//   completeTodoFetch(id);
+// }
 
-//set up checkmark
-function setupCheckmark() {
-  const check = document.getElementsByClassName("check");
-  for (let t = 0; t < check.length; t++) {
-    check[t].addEventListener("click", (event) => {
-      completeTodo(event.target.dataset.id);
+// //set up checkmark
+// function setupCheckmark() {
+//   const check = document.getElementsByClassName("check");
+//   for (let t = 0; t < check.length; t++) {
+//     check[t].addEventListener("click", (event) => {
+//       completeTodo(event.target.dataset.id);
 
-      // if (initialTodos[id].complete === true) {
-      //   console.log(check.parentElement);
-      // } else {
-      //   console.log("false");
-      // }
-    });
-  }
-}
+//       // if (initialTodos[id].complete === true) {
+//       //   console.log(check.parentElement);
+//       // } else {
+//       //   console.log("false");
+//       // }
+//     });
+//   }
+// }
 
 //delete fetch
 async function deleteTodoFetch(id) {
