@@ -6,8 +6,8 @@ async function fetchTodos() {
   let response = await fetch(api);
   let todos = await response.json();
 
-  console.log(todos)
-  
+  console.log(todos);
+
   return todos;
 }
 
@@ -33,31 +33,71 @@ function newTodo(todoContent, todoCategory) {
 
   postTodo(todoData);
 
+  initialTodos.push(todoData);
+
   displayTodos();
 }
 
-//delete todo
+//post fetch
+async function completeTodoFetch(id) {
+  let response = await fetch(api + "/" + id, {
+    method: "POST",
+    headers: {
+      "content-Type": "application/json",
+    },
+  });
+}
+
+function completeTodo(id) {
+  const index = initialTodos.findIndex((item) => item.id == id);
+  initialTodos[index].complete = !initialTodos[index].complete;
+
+  completeTodoFetch(id);
+}
+
+//set up checkmark
+function setupCheckmark() {
+  const check = document.getElementsByClassName("check");
+  for (let t = 0; t < check.length; t++) {
+    check[t].addEventListener("click", (event) => {
+      completeTodo(event.target.dataset.id);
+
+      // if (initialTodos[id].complete === true) {
+      //   console.log(check.parentElement);
+      // } else {
+      //   console.log("false");
+      // }
+    });
+  }
+}
+
+//delete fetch
 async function deleteTodoFetch(id) {
   let response = await fetch(api + "/" + id, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-  })
+  });
+}
+
+//splice todo for user interfce
+function deleteTodo(id) {
+  const index = initialTodos.findIndex((item) => item.id == id);
+  deleteTodoFetch(id);
+  initialTodos.splice(index, 1);
+  displayTodos();
 }
 
 //delete list items
-function deleteTodo(todos) {
+function setupDeleteButtons() {
   const close = document.getElementsByClassName("close");
   for (let t = 0; t < close.length; t++) {
-    close[t].addEventListener("click", (event) => { 
-      id = todos._id
-      deleteTodoFetch(id)
-      displayTodos();
+    close[t].addEventListener("click", (event) => {
+      deleteTodo(event.target.dataset.id);
     });
   }
 }
-
 
 //displays todos
 function displayTodos() {
@@ -66,7 +106,7 @@ function displayTodos() {
 
   initialTodos.forEach((item) => addTodo(item));
 
-  deleteTodo();
+  setupDeleteButtons();
   completeTodo();
 }
 
@@ -78,7 +118,7 @@ function addTodo(item) {
   const check = document.createElement("input");
   check.type = "checkbox";
 
-  check.dataset.id = item.id;
+  check.dataset.id = item._id;
   check.className = "check";
 
   check.id = "check";
@@ -86,7 +126,7 @@ function addTodo(item) {
 
   todoItem.innerHTML = `
       <label>${item.category} - ${item.todo}</label>
-      <button data-id="${item.id}" class="close">X</button>
+      <button data-id="${item._id}" class="close">X</button>
       `;
 
   todoItem.prepend(check);
@@ -128,25 +168,6 @@ async function main() {
 
 main();
 
-
-
-//checkmark
-function completeTodo() {
-  const check = document.getElementsByClassName("check");
-  for (let t = 0; t < check.length; t++) {
-    check[t].addEventListener("click", (event) => {
-      const id = event.target.dataset.id;
-      const index = initialTodos.findIndex((item) => item.id == id);
-      initialTodos[index].complete = !initialTodos[index].complete;
-      // saveToStorage();
-      if (initialTodos[index].complete === true) {
-        console.log(check.parentElement);
-      } else {
-        console.log("false");
-      }
-    });
-  }
-}
 
 const header = document.querySelector(".categoryHeader");
 
